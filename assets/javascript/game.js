@@ -4,6 +4,8 @@ var loses = 0;
 var guessesLeft = 10;
 var guessedLetters = [];
 var validGuesses = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+
+//image on left side
 var gameImage = document.createElement("img");
 gameImage.src = "assets/images/beach.jpg";
 gameImage.setAttribute("height", "auto");
@@ -18,6 +20,7 @@ var remainingGuessesText = document.getElementById("remainingGuesses");
 var guessedLettersText = document.getElementById("guessedLetters");
 document.getElementById("image").appendChild(gameImage);
 
+//prints data to screen at startup
 winsText.innerHTML = wins;
 losesText.innerHTML = loses;
 remainingGuessesText.innerHTML = guessesLeft;
@@ -54,7 +57,7 @@ for (var i = 0; i < word.length; i++) {
 }
 currentWordText.innerHTML = answerArray.join(" ");
 
-//create variable to keep track of letters taht remain to be guessed
+//create variable to keep track of letters that remain to be guessed
 var remainingLetters = word.length;
 
 //The Game Loop!!
@@ -65,21 +68,25 @@ document.onkeydown = function (event) {
     } else if (guessedLetters.indexOf(guess) != -1) {
         alert("Sorry you already guessed this letter! Pick a new one :)")
     } else {
-        guessesLeft--;
-        checkLetter();
+        var correctGuess = checkLetter();
+        if (correctGuess === false) {
+            guessesLeft--;
+        }
         updateBoard();
     }
 
     //checks letter to see if its in word choosen
     function checkLetter() {
+        var correctGuess = false;
         for (var j = 0; j < word.length; j++) {
             if (word[j] === guess) {
                 answerArray[j] = guess;
                 currentWordText.innerHTML = answerArray
                 currentWordText.innerHTML = answerArray.join(" ");
                 remainingLetters--;
+                var correctGuess = true;
             }
-        }
+        } return correctGuess;
     }
 
     //updates board  & game Bad Guess
@@ -100,18 +107,18 @@ document.onkeydown = function (event) {
     //checks if you won the game
     function win() {
         wins++;
-        alert("you won!");
+        alert("YOU WON!");
         loadImage();
 
     }
     //checks if you lost the game
     function lost() {
         loses++;
-        alert("The word was " + word + " - you lose!");
+        alert("The word was " + word + " - YOU LOSE!");
         loadImage();
 
     }
-
+    //change images
     function loadImage() {
         if (word === "shell") {
             gameImage.src = "assets/images/shell.jpg";
@@ -166,6 +173,7 @@ document.onkeydown = function (event) {
         }
 
         restartGame();
+
     }
 
 
