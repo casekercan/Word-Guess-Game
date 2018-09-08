@@ -76,11 +76,13 @@ document.onkeydown = function (event) {
             if (word[j] === guess) {
                 answerArray[j] = guess;
                 currentWordText.innerHTML = answerArray
+                currentWordText.innerHTML = answerArray.join(" ");
                 remainingLetters--;
             }
         }
     }
-    //updates board  & game
+
+    //updates board  & game Bad Guess
     function updateBoard() {
         remainingGuessesText.innerHTML = guessesLeft;
         guessedLetters.push(guess);
